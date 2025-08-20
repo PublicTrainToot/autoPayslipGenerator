@@ -58,6 +58,7 @@
   font-weight: bold;
 }
 .field input {
+  font-family: "Lexend Deca", sans-serif;
   flex: 1; /* makes input stretch nicely */
   padding: 8px;
   border: 1px solid #ccc;
@@ -112,8 +113,10 @@
 }
 
 .form-container-subtotal {
-    margin-top: 20px;
-    padding: 20px;
+    max-width: 300px;       /* limits how wide it can get */
+    max-height: 200px;       /* limits how tall it can get */
+    margin: 20px auto; 
+    padding: 10px;
     border-radius: 15px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);

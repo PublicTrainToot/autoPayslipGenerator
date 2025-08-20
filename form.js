@@ -1,16 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const inputs = document.querySelectorAll("#payslipFormBottom input[type='number']");
+    const currencyInputs = document.querySelectorAll(".currency");
     const totalGajiElement = document.getElementById("subtotalGaji");
+
+    // Format number into Rupiah
+    function formatRupiah(value) {
+        const number = Number(value.replace(/\D/g, "")); // strip non-digits
+        if (!number) return "";
+        return "Rp. " + number.toLocaleString("id-ID");
+    }
+
+    // Remove Rp. and commas to get raw number
+    function parseRupiah(value) {
+        return Number(value.replace(/\D/g, "")) || 0;
+    }
 
     function updateTotal() {
         let total = 0;
-        inputs.forEach(input => {
-            total += Number(input.value) || 0;
+        currencyInputs.forEach(input => {
+            total += parseRupiah(input.value);
         });
         totalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
     }
 
-    inputs.forEach(input => {
-        input.addEventListener("input", updateTotal);
+    // Event listeners for all inputs
+    currencyInputs.forEach(input => {
+        input.addEventListener("input", (e) => {
+            const cursorPosition = input.selectionStart;
+            const rawValue = input.value;
+            
+            input.value = formatRupiah(rawValue);
+            
+            updateTotal();
+        });
+
+        // Ensure it’s formatted on blur too
+        input.addEventListener("blur", () => {
+            input.value = formatRupiah(input.value);
+        });
     });
 });
