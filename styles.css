@@ -121,9 +121,9 @@
 }
 
 .form-container-subtotal {
-   flex: 1;                    /* let it grow nicely */
-    max-width: 300px;
+    flex: 1;                    /* let it grow nicely */
     padding: 10px;
+    margin: 10px auto;
     border-radius: 15px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -142,15 +142,15 @@
     color: #2b2b2b;
 }
 
-
 #clearButton {
     font-family: "Lexend Deca", sans-serif;
-    padding: 10px 20px;
+    padding: 20px 30px;
     border: none;
     border-radius: 8px;         /* rounded corners */
     background: #e74c3c;        /* red */
     color: white;
     font-weight: bold;
+    font-size: larger;
     cursor: pointer;
     transition: all 0.25s ease;
 }

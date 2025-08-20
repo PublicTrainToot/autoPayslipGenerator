@@ -20,7 +20,7 @@
     <body style="background-color: rgb(255, 255, 255)"> 
         <!-- Title -->
         <div class="rounded-box">
-            <h1 class="lexend-Deca-Title" style="color: white;">Auto Payslip Generator</h1>
+            <h1 class="lexend-Deca-Title" style="color: white;">Mitra Hospital SaaS System </h1>
         </div>
 
         <!-- Top Part -->
@@ -89,7 +89,69 @@
                     <div class="form-container-subtotal">
                         <h2>Subtotal Gaji</h2>
                         <p id="subtotalGaji">Rp 0</p>
-                            
+                    </div>
+
+                    <div>
+                         <button type ="button" id="clearButton">Clear</button>
+                    </div>
+                </div>
+        </div>
+
+        <!-- Bottom-est part -->
+        <div class="form-container-bottom">
+            <form id="payslipFormBottom">
+                <h1 style="font-family: 'Lexend Deca', sans-serif;">Potongan</h1>
+                <div class="grid-container">
+                    <div>
+                        <label>BPJS Ketenagakerjaan 3%</label>
+                        <input type="text" class="currencyPotongan" id="bpjsKetenagakerjaan" required>
+                    </div>
+
+                    <div>
+                        <label>BPJS Kesehatan 1%</label>
+                        <input type="text" class="currencyPotongan" id="bpjsKesehatan" required>
+                    </div>
+
+                    <div>
+                        <label>BPJS Kesehatan Keluarga Tambahan</label>
+                        <input type="text" class="currencyPotongan" id="bpjsKesehatanKeluargaTambahan" required>
+                    </div>
+
+                    <div>
+                        <label>Absensi Keterlambatan</label>
+                        <input type="text" class="currencyPotongan" id="absensiKeterlambatan" required>
+                    </div>
+
+                    <div>
+                        <label>Absensi Ketidakhadiran/Sakit</label>
+                        <input type="text" class="currencyPotongan" id="absensiKetidakhadiranSakit" required>
+                    </div>
+
+                    <div>
+                        <label>Denda Ketidakhadiran/Diklat/Undangan</label>
+                        <input type="text" class="currencyPotongan" id="dendaKetidakhadiran" required>
+                    </div>
+
+                    <div>
+                        <label>Tagihan/Pembelian Obat/Hutang</label>
+                        <input type="text" class="currencyPotongan" id="tagihan" required>
+                    </div>
+                    
+                    <div>
+                        <label>Koperasi Mitra Mandiri Sejahtera</label>
+                        <input type="text" class="currencyPotongan" id="koperasi" required>
+                    </div>
+
+                    <div>
+                        <label>PPH 21</label>
+                        <input type="text" class="currencyPotongan" id="pph21" required>
+                    </div>
+                </div> 
+
+                <div class="subtotal-grid">
+                    <div class="form-container-subtotal">
+                        <h2>Total Gaji</h2>
+                        <p id="TotalGaji">Rp 0</p>
                     </div>
 
                     <div>

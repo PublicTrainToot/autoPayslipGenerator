@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const currencyInputs = document.querySelectorAll(".currency");
-    const totalGajiElement = document.getElementById("subtotalGaji");
+    const subtotalGajiElement = document.getElementById("subtotalGaji");
+    const totalGajiElement = document.getElementById("totalGaji");
 
     // Format number into Rupiah
     function formatRupiah(value) {
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currencyInputs.forEach(input => {
             total += parseRupiah(input.value);
         });
-        totalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
+        subtotalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
     }
 
     // Event listeners for all inputs
@@ -37,5 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
         input.addEventListener("blur", () => {
             input.value = formatRupiah(input.value);
         });
+
+     // 🚀 Clear button logic
+    clearButton.addEventListener("click", () => {
+        currencyInputs.forEach(input => {
+            input.value = ""; // empty each field
+        });
+        subtotalGajiElement.textContent = "Rp 0"; // reset subtotal
+    });
     });
 });
