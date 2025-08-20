@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Auto Payslip Generator</title>
+
+        <!-- Buncha links, GG Google fix your web -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+        
+        <!-- For PDF shenanigans-->
+        <script src="libs/html2pdf.bundle.min.js"></script>
+    </head>
+
+    <body style="background-color: rgb(255, 255, 255)"> 
+        <!-- Title -->
+        <div class="rounded-box">
+            <h1 class="lexend-Deca-Title" style="color: white;">Auto Payslip Generator</h1>
+        </div>
+
+        <!-- Top Part -->
+        <div class="form-container-top">
+            <form id="payslipFormTop">
+                <div class="top-grid">
+                    <div class="field">
+                        <label>Nama:</label>
+                        <input type="text" id="nama" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Jabatan:</label>
+                        <input type="text" id="jabatan">
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Bottom Part -->
+        <div class="form-container-bottom">
+            <form id="payslipFormBottom">
+                <div class="grid-container">
+                    <div>
+                        <label>Gaji Pokok</label>
+                        <input type="number" id="gajiPokok" required>
+                    </div>
+
+                    <div>
+                        <label>Tunjangan Struktural</label>
+                        <input type="number" id="tunjanganStruktural" required>
+                    </div>
+
+                    <div>
+                        <label>Tunjangan Fungsional</label>
+                        <input type="number" id="tunjanganFungsional" required>
+                    </div>
+
+                    <div>
+                        <label>Tunjangan Kehadiran</label>
+                        <input type="number" id="tunjangankehadiran" required>
+                    </div>
+
+                    <div>
+                        <label>Insentif</label>
+                        <input type="number" id="Insentif" required>
+                    </div>
+
+                    <div>
+                        <label>On-Call</label>
+                        <input type="number" id="onCall" required>
+                    </div>
+
+                    <div>
+                        <label>Lembur</label>
+                        <input type="number" id="lembur" required>
+                    </div>
+
+                    <div>
+                        <label>Lain-Lain</label>
+                        <input type="number" id="lainLain" required>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="button" id="generatePayslip">Generate Payslip</button>
+                    <button type="button" id="downloadPayslip">Download Payslip</button>
+            </form>
+        </div>
+
+        
+        <!-- Payslip template (hidden initially) -->
+        <div id="payslipOutput" style="display:none;">
+        <h2>Slip Gaji</h2>
+        <p>Nama: <span id="outNama"></span></p>
+        <p>Jabatan: <span id="outJabatan"></span></p>
+        <p>Gaji Pokok: Rp <span id="outGajiPokok"></span></p>
+        <p>Tunjangan Kehadiran: Rp <span id="outTunjanganKehadiran"></span></p>
+        </div>
+
+        <script src="form.js"></script>
+    </body>
+</html>
