@@ -1,50 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
     const currencyInputs = document.querySelectorAll(".currency");
+    const potonganInputs = document.querySelectorAll(".currencyPotongan");
+
+    const clearButtons = document.querySelectorAll("#clearButton"); // careful, you have 2 clear buttons
     const subtotalGajiElement = document.getElementById("subtotalGaji");
     const totalGajiElement = document.getElementById("totalGaji");
 
     // Format number into Rupiah
     function formatRupiah(value) {
-        const number = Number(value.replace(/\D/g, "")); // strip non-digits
+        const number = Number(value.replace(/\D/g, ""));
         if (!number) return "";
-        return "Rp. " + number.toLocaleString("id-ID");
+        return "Rp " + number.toLocaleString("id-ID");
     }
 
-    // Remove Rp. and commas to get raw number
     function parseRupiah(value) {
         return Number(value.replace(/\D/g, "")) || 0;
     }
 
-    function updateTotal() {
-        let total = 0;
+    function hitungSubtotalGaji() {
+        let subtotal = 0;
         currencyInputs.forEach(input => {
-            total += parseRupiah(input.value);
+            subtotal += parseRupiah(input.value);
         });
-        subtotalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
+        return subtotal;
     }
 
-    // Event listeners for all inputs
-    currencyInputs.forEach(input => {
-        input.addEventListener("input", (e) => {
-            const cursorPosition = input.selectionStart;
-            const rawValue = input.value;
-            
-            input.value = formatRupiah(rawValue);
-            
-            updateTotal();
+    function hitungTotalPotongan() {
+        let potongan = 0;
+        potonganInputs.forEach(input => {
+            potongan += parseRupiah(input.value);
         });
+        return potongan;
+    }
 
-        // Ensure it’s formatted on blur too
+    function updateTotals() {
+        const subtotal = hitungSubtotalGaji();
+        const potongan = hitungTotalPotongan();
+        const total = subtotal - potongan;
+
+        subtotalGajiElement.textContent = "Rp " + subtotal.toLocaleString("id-ID");
+        totalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
+    }
+
+    // Attach input listeners for gaji
+    currencyInputs.forEach(input => {
+        input.addEventListener("input", () => {
+            input.value = formatRupiah(input.value);
+            updateTotals();
+        });
         input.addEventListener("blur", () => {
             input.value = formatRupiah(input.value);
         });
-
-     // 🚀 Clear button logic
-    clearButton.addEventListener("click", () => {
-        currencyInputs.forEach(input => {
-            input.value = ""; // empty each field
-        });
-        subtotalGajiElement.textContent = "Rp 0"; // reset subtotal
     });
+
+    // Attach input listeners for potongan
+    potonganInputs.forEach(input => {
+        input.addEventListener("input", () => {
+            input.value = formatRupiah(input.value);
+            updateTotals();
+        });
+        input.addEventListener("blur", () => {
+            input.value = formatRupiah(input.value);
+        });
+    });
+
+    // Clear buttons
+    clearButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            [...currencyInputs, ...potonganInputs].forEach(input => input.value = "");
+            subtotalGajiElement.textContent = "Rp 0";
+            totalGajiElement.textContent = "Rp 0";
+        });
     });
 });
