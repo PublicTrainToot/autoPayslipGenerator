@@ -30,8 +30,8 @@
 }
 
 .form-container-top:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .form-container-top label{
@@ -112,10 +112,17 @@
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
 }
 
+.subtotal-grid {
+    display: flex;
+    justify-content: center; /* center them together */
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
 .form-container-subtotal {
-    max-width: 300px;       /* limits how wide it can get */
-    max-height: 200px;       /* limits how tall it can get */
-    margin: 20px auto; 
+   flex: 1;                    /* let it grow nicely */
+    max-width: 300px;
     padding: 10px;
     border-radius: 15px;
     background-color: #f9f9f9;
@@ -124,15 +131,34 @@
     font-family: "Lexend Deca", sans-serif;
 }
 
-.form-container-total h2 {
+.form-container-subtotal h2 {
     margin-bottom: 10px;
     font-weight: 600;
 }
 
-.form-container-total p {
+.form-container-subtotal p {
     font-size: 1.5rem;
     font-weight: bold;
     color: #2b2b2b;
+}
+
+
+#clearButton {
+    font-family: "Lexend Deca", sans-serif;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;         /* rounded corners */
+    background: #e74c3c;        /* red */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#clearButton:hover {
+    background: #c0392b;        /* darker red on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
 
 .button-row {
