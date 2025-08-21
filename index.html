@@ -20,7 +20,8 @@
     <body style="background-color: rgb(255, 255, 255)"> 
         <!-- Title -->
         <div class="rounded-box">
-            <h1 class="lexend-Deca-Title" style="color: white;">Mitra Hospital SaaS System </h1>
+            <h1 class="lexend-Deca-Title" style="color: white;">Sistem Slip Gaji Rs. Mitra</h1>
+            <p class="lexend-Deca-Title" style="color: white;" >Created by: Devin Alfanius S.Kom</p>
         </div>
 
         <!-- Top Part -->
@@ -171,15 +172,73 @@
             </form> -->
 
                 
-        <!-- Payslip template (hidden initially) -->
-        <div id="payslipOutput" style="display:none;">
-        <h2>Slip Gaji</h2>
-        <p>Nama: <span id="outNama"></span></p>
-        <p>Jabatan: <span id="outJabatan"></span></p>
-        <p>Gaji Pokok: Rp <span id="outGajiPokok"></span></p>
-        <p>Tunjangan Kehadiran: Rp <span id="outTunjanganKehadiran"></span></p>
-        </div>
+        <div id="payslipPDF" style="display:none; font-family:'Lexend Deca', sans-serif; padding: 20px;">
+            <div style="text-align: center; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: red;">RUMAH SAKIT MITRA</h2>
+                <p style="margin: 0; font-style: italic;">Melayani Sepenuh Hati</p>
+                <h3 style="margin: 10px 0;">SLIP GAJI</h3>
+            </div>
 
-        <script src="form.js"></script>
+        <table style="width:100%; margin-bottom: 15px;">
+            <tr>
+                <td><b>Periode Gaji Tahun</b>: <span id="outTahun"></span></td>
+                <td><b>Bulan</b>: <span id="outBulan"></span></td>
+            </tr>
+            <tr>
+                <td><b>Jabatan</b>: <span id="outJabatan"></span></td>
+                <td><b>Nama</b>: <span id="outNama"></span></td>
+            </tr>
+        </table>
+
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;" border="1">
+            <tr>
+                <th align="left">Komponen</th>
+                <th align="right">Jumlah</th>
+            </tr>
+            <tr><td>Gaji Pokok</td><td align="right" id="outGajiPokok"></td></tr>
+            <tr><td>Tunjangan Struktural</td><td align="right" id="outTunjanganStruktural"></td></tr>
+            <tr><td>Tunjangan Fungsional</td><td align="right" id="outTunjanganFungsional"></td></tr>
+            <tr><td>Tunjangan Kehadiran</td><td align="right" id="outTunjanganKehadiran"></td></tr>
+            <tr><td>Insentif</td><td align="right" id="outInsentif"></td></tr>
+            <tr><td>On-Call</td><td align="right" id="outOnCall"></td></tr>
+            <tr><td>Lembur</td><td align="right" id="outLembur"></td></tr>
+            <tr><td>Lain-Lain</td><td align="right" id="outLainLain"></td></tr>
+            <tr><td><b>Sub Total</b></td><td align="right" id="outSubtotal"></td></tr>
+        </table>
+
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;" border="1">
+            <tr>
+                <th align="left">Potongan</th>
+                <th align="right">Jumlah</th>
+            </tr>
+            <tr><td>BPJS Ketenagakerjaan 3%</td><td align="right" id="outBpjsKetenagakerjaan"></td></tr>
+            <tr><td>BPJS Kesehatan 1%</td><td align="right" id="outBpjsKesehatan"></td></tr>
+            <tr><td>BPJS Kesehatan Keluarga Tambahan</td><td align="right" id="outBpjsKesehatanKeluargaTambahan"></td></tr>
+            <tr><td>Absensi Keterlambatan</td><td align="right" id="outAbsensiKeterlambatan"></td></tr>
+            <tr><td>Absensi Ketidakhadiran/Sakit</td><td align="right" id="outAbsensiKetidakhadiranSakit"></td></tr>
+            <tr><td>Denda Ketidakhadiran</td><td align="right" id="outDendaKetidakhadiran"></td></tr>
+            <tr><td>Tagihan/Hutang</td><td align="right" id="outTagihan"></td></tr>
+            <tr><td>Koperasi</td><td align="right" id="outKoperasi"></td></tr>
+            <tr><td>PPH 21</td><td align="right" id="outPPH21"></td></tr>
+            <tr><td><b>Total Potongan</b></td><td align="right" id="outTotalPotongan"></td></tr>
+        </table>
+
+        <h3 style="text-align:right;">Total Upah: <span id="outTotalGaji"></span></h3>
+
+        <div style="margin-top:40px; display:flex; justify-content:space-between;">
+            <div>
+                <p>Mengetahui,</p>
+                <p>Kepala Bagian SDM</p>
+            </div>
+            <div style="text-align:right;">
+                <p>Di Terima Oleh</p>
+                <p id="outNamaTtd"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="form.js"></script>
+    
     </body>
 </html>
