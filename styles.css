@@ -210,3 +210,95 @@
     transform: translateY(1px); /* lil squish */
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
+
+/* --- Payslip PDF Styling --- */
+#payslipPDF {
+  max-width: 800px;
+  margin: auto;
+  font-family: 'Lexend Deca', sans-serif;
+  color: #000;
+  font-size: 14px;
+}
+
+#payslipPDF h2, 
+#payslipPDF h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+#payslipPDF .header {
+  text-align: center;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+#payslipPDF .header h2 {
+  color: red;
+  font-size: 20px;
+}
+
+#payslipPDF .header p {
+  margin: 0;
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* Info Section */
+#payslipPDF .info-table {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#payslipPDF .info-table td {
+  padding: 4px 0;
+}
+
+/* Salary + Potongan Tables */
+#payslipPDF table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#payslipPDF table.data-table th {
+  background: #f2f2f2;
+  padding: 6px;
+  text-align: left;
+  border-bottom: 2px solid #000;
+}
+
+#payslipPDF table.data-table td {
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+#payslipPDF table.data-table td:last-child {
+  text-align: right;
+}
+
+/* Highlight Subtotals & Totals */
+#payslipPDF .subtotal-row td {
+  font-weight: bold;
+  border-top: 2px solid #000;
+}
+
+#payslipPDF .total-upah {
+  text-align: right;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 2px solid black;
+}
+
+/* Signature Section */
+#payslipPDF .signature {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#payslipPDF .signature div {
+  text-align: center;
+}
