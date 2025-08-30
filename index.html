@@ -37,6 +37,16 @@
                         <label>Jabatan:</label>
                         <input type="text" id="jabatan">
                     </div>
+
+                     <div class="field">
+                        <label>Bulan:</label>
+                        <input type="text" id="bulan" required>
+                    </div>
+
+                     <div class="field">
+                        <label>Periode Gaji Tahun:</label>
+                        <input type="text" id="periodeGajiTahun" required>
+                    </div>
                 </div>
             </form>
         </div>
@@ -164,19 +174,18 @@
                          <button type ="button" id="clearButton">Clear</button>
                     </div>
                 </div>
+
+                <div class="button-row">
+                    <button type="button" id="generatePayslip">Preview</button>
+                    <button type="button" id="downloadPayslip">Download</button>
+                </div>
         </div>
 
-        <div class="button-row">
-            <button type="button" id="generatePayslip">Generate Preview</button>
-            <button type="button" id="downloadPayslip">Download Payslip</button>
-        </form>
-
-                
         <div id="payslipPDF" style="display:none;">
             <div class="header">
                 <h2>RUMAH SAKIT MITRA</h2>
-                <p>Melayani Sepenuh Hati</p>
-                h3>SLIP GAJI</h3>
+                <p>Melayani Sepenuh Hati</p>    
+                <h3>SLIP GAJI</h3>
         </div>
 
         <table class="info-table">

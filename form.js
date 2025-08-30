@@ -37,7 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const subtotal = hitungSubtotalGaji();
         const potongan = hitungTotalPotongan();
         const total = subtotal - potongan;
+        const totalPotonganElement = document.getElementById("totalPotongan");
 
+        totalPotonganElement.textContent = "Rp " + potongan.toLocaleString("id-ID");
         subtotalGajiElement.textContent = "Rp " + subtotal.toLocaleString("id-ID");
         totalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
     }
@@ -81,6 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("outNama").textContent = document.getElementById("nama").value;
             document.getElementById("outNamaTtd").textContent = document.getElementById("nama").value;
             document.getElementById("outJabatan").textContent = document.getElementById("jabatan").value;
+            document.getElementById("outBulan").textContent = document.getElementById("bulan").value;
+            document.getElementById("outTahun").textContent = document.getElementById("periodeGajiTahun").value;
+            
 
             // Gaji components
             document.getElementById("outGajiPokok").textContent = document.getElementById("gajiPokok").value;

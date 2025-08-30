@@ -43,7 +43,7 @@
 
 .top-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* two fields side by side */
+  grid-template-columns: 2fr 2fr; /* two fields side by side */
   gap: 30px; /* space between the two fields */
 }
 
