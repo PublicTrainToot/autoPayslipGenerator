@@ -124,4 +124,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 .from(element)
                 .save();
         });
+        console.log("Testing changes!");
 });
