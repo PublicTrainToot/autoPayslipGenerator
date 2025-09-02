@@ -185,11 +185,13 @@
 
 .button-row {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
     gap: 15px;
 }
 
 .button-row button {
+    flex: 1;
     padding: 10px 20px;
     border: none;
     border-radius: 6px;
@@ -302,3 +304,10 @@
 #payslipPDF .signature div {
   text-align: center;
 }
+
+@page { size: A4; margin: 10mm; }
+#payslipPDF { background:#fff; color:#000; padding: 0; }
+.info-table, .data-table { width: 100%; border-collapse: collapse; }
+.info-table tr, .data-table tr { page-break-inside: avoid; }
+.subtotal-row, .signature { page-break-inside: avoid; }
+
