@@ -184,7 +184,7 @@
             </div>
         </div>
 
-        <div id="invoice">
+        <div id="pdfWrapper" style="display:none;">
             <div id="payslipPDF" style="display:none;">
                 <div class="header">
                     <h2>RUMAH SAKIT MITRA</h2>
@@ -192,61 +192,60 @@
                     <h3>SLIP GAJI</h3>
                 </div>
 
-            <table class="info-table">
-                <tr>
-                <td><b>Periode Gaji Tahun</b>: <span id="outTahun"></span></td>
-                <td><b>Bulan</b>: <span id="outBulan"></span></td>
-                </tr>
-                <tr>
-                <td><b>Jabatan</b>: <span id="outJabatan"></span></td>
-                <td><b>Nama</b>: <span id="outNama"></span></td>
-                </tr>
-            </table>
+                <table class="info-table">
+                    <tr>
+                    <td><b>Periode Gaji Tahun</b>: <span id="outTahun"></span></td>
+                    <td><b>Bulan</b>: <span id="outBulan"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Jabatan</b>: <span id="outJabatan"></span></td>
+                    <td><b>Nama</b>: <span id="outNama"></span></td>
+                    </tr>
+                </table>
 
-            <table class="data-table">
-                <tr><th>Komponen</th><th>Jumlah</th></tr>
-                <tr><td>Gaji Pokok</td><td id="outGajiPokok"></td></tr>
-                <tr><td>Tunjangan Struktural</td><td id="outTunjanganStruktural"></td></tr>
-                <tr><td>Tunjangan Fungsional</td><td id="outTunjanganFungsional"></td></tr>
-                <tr><td>Tunjangan Kehadiran</td><td id="outTunjanganKehadiran"></td></tr>
-                <tr><td>Insentif</td><td id="outInsentif"></td></tr>
-                <tr><td>On-Call</td><td id="outOnCall"></td></tr>
-                <tr><td>Lembur</td><td id="outLembur"></td></tr>
-                <tr><td>Lain-Lain</td><td id="outLainLain"></td></tr>
-                <tr class="subtotal-row"><td>Sub Total</td><td id="outSubtotal"></td></tr>
-            </table>
+                <table class="data-table">
+                    <tr><th>Komponen</th><th>Jumlah</th></tr>
+                    <tr><td>Gaji Pokok</td><td id="outGajiPokok"></td></tr>
+                    <tr><td>Tunjangan Struktural</td><td id="outTunjanganStruktural"></td></tr>
+                    <tr><td>Tunjangan Fungsional</td><td id="outTunjanganFungsional"></td></tr>
+                    <tr><td>Tunjangan Kehadiran</td><td id="outTunjanganKehadiran"></td></tr>
+                    <tr><td>Insentif</td><td id="outInsentif"></td></tr>
+                    <tr><td>On-Call</td><td id="outOnCall"></td></tr>
+                    <tr><td>Lembur</td><td id="outLembur"></td></tr>
+                    <tr><td>Lain-Lain</td><td id="outLainLain"></td></tr>
+                    <tr class="subtotal-row"><td>Sub Total</td><td id="outSubtotal"></td></tr>
+                </table>
 
-            <table class="data-table">
-                <tr><th>Potongan</th><th>Jumlah</th></tr>
-                <tr><td>BPJS Ketenagakerjaan 3%</td><td id="outBpjsKetenagakerjaan"></td></tr>
-                <tr><td>BPJS Kesehatan 1%</td><td id="outBpjsKesehatan"></td></tr>
-                <tr><td>BPJS Kesehatan Keluarga Tambahan</td><td id="outBpjsKesehatanKeluargaTambahan"></td></tr>
-                <tr><td>Absensi Keterlambatan</td><td id="outAbsensiKeterlambatan"></td></tr>
-                <tr><td>Absensi Ketidakhadiran/Sakit</td><td id="outAbsensiKetidakhadiranSakit"></td></tr>
-                <tr><td>Denda Ketidakhadiran</td><td id="outDendaKetidakhadiran"></td></tr>
-                <tr><td>Tagihan/Hutang</td><td id="outTagihan"></td></tr>
-                <tr><td>Koperasi</td><td id="outKoperasi"></td></tr>
-                <tr><td>PPH 21</td><td id="outPPH21"></td></tr>
-                <tr class="subtotal-row"><td>Total Potongan</td><td id="outTotalPotongan"></td></tr>
-            </table>
+                <table class="data-table">
+                    <tr><th>Potongan</th><th>Jumlah</th></tr>
+                    <tr><td>BPJS Ketenagakerjaan 3%</td><td id="outBpjsKetenagakerjaan"></td></tr>
+                    <tr><td>BPJS Kesehatan 1%</td><td id="outBpjsKesehatan"></td></tr>
+                    <tr><td>BPJS Kesehatan Keluarga Tambahan</td><td id="outBpjsKesehatanKeluargaTambahan"></td></tr>
+                    <tr><td>Absensi Keterlambatan</td><td id="outAbsensiKeterlambatan"></td></tr>
+                    <tr><td>Absensi Ketidakhadiran/Sakit</td><td id="outAbsensiKetidakhadiranSakit"></td></tr>
+                    <tr><td>Denda Ketidakhadiran</td><td id="outDendaKetidakhadiran"></td></tr>
+                    <tr><td>Tagihan/Hutang</td><td id="outTagihan"></td></tr>
+                    <tr><td>Koperasi</td><td id="outKoperasi"></td></tr>
+                    <tr><td>PPH 21</td><td id="outPPH21"></td></tr>
+                    <tr class="subtotal-row"><td>Total Potongan</td><td id="outTotalPotongan"></td></tr>
+                </table>
 
-            <div class="total-upah">
-                Total Upah: <span id="outTotalGaji"></span>
-            </div>
-
-            <div class="signature">
-                <div>
-                <p>Mengetahui,</p>
-                <p>Kepala Bagian SDM</p>
+                <div class="total-upah">
+                    Total Upah: <span id="outTotalGaji"></span>
                 </div>
-                <div>
-                <p>Di Terima Oleh</p>
-                <p id="outNamaTtd"></p>
+
+                <div class="signature">
+                    <div>
+                    <p>Mengetahui,</p>
+                    <p>Kepala Bagian SDM</p>
+                    </div>
+                    <div>
+                    <p>Di Terima Oleh</p>
+                    <p id="outNamaTtd"></p>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     <script src="form.js"></script>
 
     </body>

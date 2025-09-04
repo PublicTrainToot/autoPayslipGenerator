@@ -75,91 +75,75 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    function download_pdf(){
-        const pdf = document.getElementById("invoice");
-        html2pdf().from(pdf).save();
+    function download_pdf() {
+        const pdfElement = document.getElementById("payslipPDF");
+
+        const opt = {
+            margin:       0,
+            filename:     'slip-gaji.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  {
+                scale: 1.25,
+                useCORS: true,
+                scrollY: 0
+            },
+            jsPDF:        { unit: 'pt', format: [595.28, 841.89] }, // A4 in points
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt)
+        .from(pdfElement)
+        .save();
     }
+
+    function fillPayslipContent(){
+        document.getElementById("outNama").textContent = document.getElementById("nama").value;
+        document.getElementById("outNamaTtd").textContent = document.getElementById("nama").value;
+        document.getElementById("outJabatan").textContent = document.getElementById("jabatan").value;
+        document.getElementById("outBulan").textContent = document.getElementById("bulan").value;
+        document.getElementById("outTahun").textContent = document.getElementById("periodeGajiTahun").value;
+            
+
+        // Gaji components
+        document.getElementById("outGajiPokok").textContent = document.getElementById("gajiPokok").value;
+        document.getElementById("outTunjanganStruktural").textContent = document.getElementById("tunjanganStruktural").value;
+        document.getElementById("outTunjanganFungsional").textContent = document.getElementById("tunjanganFungsional").value;
+        document.getElementById("outTunjanganKehadiran").textContent = document.getElementById("tunjanganKehadiran").value;
+        document.getElementById("outInsentif").textContent = document.getElementById("Insentif").value;
+        document.getElementById("outOnCall").textContent = document.getElementById("onCall").value;
+        document.getElementById("outLembur").textContent = document.getElementById("lembur").value;
+        document.getElementById("outLainLain").textContent = document.getElementById("lainLain").value;
+
+        // Subtotal + Totals
+        document.getElementById("outSubtotal").textContent = subtotalGajiElement.textContent;
+        document.getElementById("outTotalPotongan").textContent = document.getElementById("totalPotongan").textContent;
+        document.getElementById("outTotalGaji").textContent = totalGajiElement.textContent;
+
+        // Potongan
+        document.getElementById("outBpjsKetenagakerjaan").textContent = document.getElementById("bpjsKetenagakerjaan").value;
+        document.getElementById("outBpjsKesehatan").textContent = document.getElementById("bpjsKesehatan").value;
+        document.getElementById("outBpjsKesehatanKeluargaTambahan").textContent = document.getElementById("bpjsKesehatanKeluargaTambahan").value;
+        document.getElementById("outAbsensiKeterlambatan").textContent = document.getElementById("absensiKeterlambatan").value;
+        document.getElementById("outAbsensiKetidakhadiranSakit").textContent = document.getElementById("absensiKetidakhadiranSakit").value;
+        document.getElementById("outDendaKetidakhadiran").textContent = document.getElementById("dendaKetidakhadiran").value;
+        document.getElementById("outTagihan").textContent = document.getElementById("tagihan").value;
+        document.getElementById("outKoperasi").textContent = document.getElementById("koperasi").value;
+        document.getElementById("outPPH21").textContent = document.getElementById("pph21").value;
+    };
 
     const btnGenerate = document.getElementById("generatePayslip");
     const btnDownload = document.getElementById("downloadPayslip");
 
     btnGenerate.addEventListener("click", () => {
-        // Fill text fields
-        document.getElementById("outNama").textContent = document.getElementById("nama").value;
-        document.getElementById("outNamaTtd").textContent = document.getElementById("nama").value;
-        document.getElementById("outJabatan").textContent = document.getElementById("jabatan").value;
-        document.getElementById("outBulan").textContent = document.getElementById("bulan").value;
-        document.getElementById("outTahun").textContent = document.getElementById("periodeGajiTahun").value;
-            
-
-        // Gaji components
-        document.getElementById("outGajiPokok").textContent = document.getElementById("gajiPokok").value;
-        document.getElementById("outTunjanganStruktural").textContent = document.getElementById("tunjanganStruktural").value;
-        document.getElementById("outTunjanganFungsional").textContent = document.getElementById("tunjanganFungsional").value;
-        document.getElementById("outTunjanganKehadiran").textContent = document.getElementById("tunjanganKehadiran").value;
-        document.getElementById("outInsentif").textContent = document.getElementById("Insentif").value;
-        document.getElementById("outOnCall").textContent = document.getElementById("onCall").value;
-        document.getElementById("outLembur").textContent = document.getElementById("lembur").value;
-        document.getElementById("outLainLain").textContent = document.getElementById("lainLain").value;
-
-        // Subtotal + Totals
-        document.getElementById("outSubtotal").textContent = subtotalGajiElement.textContent;
-        document.getElementById("outTotalPotongan").textContent = document.getElementById("totalPotongan").textContent;
-        document.getElementById("outTotalGaji").textContent = totalGajiElement.textContent;
-
-        // Potongan
-        document.getElementById("outBpjsKetenagakerjaan").textContent = document.getElementById("bpjsKetenagakerjaan").value;
-        document.getElementById("outBpjsKesehatan").textContent = document.getElementById("bpjsKesehatan").value;
-        document.getElementById("outBpjsKesehatanKeluargaTambahan").textContent = document.getElementById("bpjsKesehatanKeluargaTambahan").value;
-        document.getElementById("outAbsensiKeterlambatan").textContent = document.getElementById("absensiKeterlambatan").value;
-        document.getElementById("outAbsensiKetidakhadiranSakit").textContent = document.getElementById("absensiKetidakhadiranSakit").value;
-        document.getElementById("outDendaKetidakhadiran").textContent = document.getElementById("dendaKetidakhadiran").value;
-        document.getElementById("outTagihan").textContent = document.getElementById("tagihan").value;
-        document.getElementById("outKoperasi").textContent = document.getElementById("koperasi").value;
-        document.getElementById("outPPH21").textContent = document.getElementById("pph21").value;
-
-        // Show for preview
+        fillPayslipContent();
         document.getElementById("payslipPDF").style.display = "block";
+        document.getElementById("pdfWrapper").style.display = "block";
     });        
 
     btnDownload.addEventListener("click", () => {
-        // Fill text fields
-        document.getElementById("outNama").textContent = document.getElementById("nama").value;
-        document.getElementById("outNamaTtd").textContent = document.getElementById("nama").value;
-        document.getElementById("outJabatan").textContent = document.getElementById("jabatan").value;
-        document.getElementById("outBulan").textContent = document.getElementById("bulan").value;
-        document.getElementById("outTahun").textContent = document.getElementById("periodeGajiTahun").value;
-            
-
-        // Gaji components
-        document.getElementById("outGajiPokok").textContent = document.getElementById("gajiPokok").value;
-        document.getElementById("outTunjanganStruktural").textContent = document.getElementById("tunjanganStruktural").value;
-        document.getElementById("outTunjanganFungsional").textContent = document.getElementById("tunjanganFungsional").value;
-        document.getElementById("outTunjanganKehadiran").textContent = document.getElementById("tunjanganKehadiran").value;
-        document.getElementById("outInsentif").textContent = document.getElementById("Insentif").value;
-        document.getElementById("outOnCall").textContent = document.getElementById("onCall").value;
-        document.getElementById("outLembur").textContent = document.getElementById("lembur").value;
-        document.getElementById("outLainLain").textContent = document.getElementById("lainLain").value;
-
-        // Subtotal + Totals
-        document.getElementById("outSubtotal").textContent = subtotalGajiElement.textContent;
-        document.getElementById("outTotalPotongan").textContent = document.getElementById("totalPotongan").textContent;
-        document.getElementById("outTotalGaji").textContent = totalGajiElement.textContent;
-
-        // Potongan
-        document.getElementById("outBpjsKetenagakerjaan").textContent = document.getElementById("bpjsKetenagakerjaan").value;
-        document.getElementById("outBpjsKesehatan").textContent = document.getElementById("bpjsKesehatan").value;
-        document.getElementById("outBpjsKesehatanKeluargaTambahan").textContent = document.getElementById("bpjsKesehatanKeluargaTambahan").value;
-        document.getElementById("outAbsensiKeterlambatan").textContent = document.getElementById("absensiKeterlambatan").value;
-        document.getElementById("outAbsensiKetidakhadiranSakit").textContent = document.getElementById("absensiKetidakhadiranSakit").value;
-        document.getElementById("outDendaKetidakhadiran").textContent = document.getElementById("dendaKetidakhadiran").value;
-        document.getElementById("outTagihan").textContent = document.getElementById("tagihan").value;
-        document.getElementById("outKoperasi").textContent = document.getElementById("koperasi").value;
-        document.getElementById("outPPH21").textContent = document.getElementById("pph21").value;
-
-        // Show for preview
+        fillPayslipContent();
         document.getElementById("payslipPDF").style.display = "block";
-
+        document.getElementById("pdfWrapper").style.display = "block";
         download_pdf();
     });
 });        

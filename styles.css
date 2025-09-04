@@ -214,12 +214,31 @@
 }
 
 /* --- Payslip PDF Styling --- */
+
+#pdfWrapper {
+    width: 210mm;
+    height: 297mm;
+    padding: 0;
+    margin: 0 auto;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #payslipPDF {
-  max-width: 800px;
-  margin: auto;
+  transform: scale(0.9);           /* Adjust this value to fit better */
+  transform-origin: center center;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
   font-family: 'Lexend Deca', sans-serif;
   color: #000;
   font-size: 14px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 #payslipPDF h2, 
