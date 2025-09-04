@@ -47,6 +47,32 @@
   gap: 30px; /* space between the two fields */
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+    font-family: "Lexend Deca", sans-serif;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 3s ease;
+}
+
 .field {
   display: flex;
   align-items: center;
@@ -182,6 +208,26 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
+
+#potonganClearButton {
+    font-family: "Lexend Deca", sans-serif;
+    padding: 20px 30px;
+    border: none;
+    border-radius: 8px;         /* rounded corners */
+    background: #e74c3c;        /* red */
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#potonganClearButton:hover {
+    background: #c0392b;        /* darker red on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
 
 .button-row {
     display: flex;

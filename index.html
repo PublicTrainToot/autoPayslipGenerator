@@ -31,7 +31,10 @@
                 <div class="top-grid">
                     <div class="field">
                         <label>Nama:</label>
-                        <input type="text" id="nama" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="nama" required>
+                            <small class="error-message" id="errorNama"></small>
+                        </div>    
                     </div>
 
                     <div class="field">
@@ -41,12 +44,18 @@
 
                      <div class="field">
                         <label>Bulan:</label>
-                        <input type="text" id="bulan" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="bulan" required>
+                            <small class="error-message" id="errorBulan"></small>
+                        </div>    
                     </div>
 
                      <div class="field">
                         <label>Periode Gaji Tahun:</label>
-                        <input type="text" id="periodeGajiTahun" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="periodeGajiTahun" required>
+                            <small class="error-message" id="errorTahun"></small>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -172,7 +181,7 @@
                     </div>  
 
                     <div>
-                         <button type ="button" id="clearButton">Clear</button>
+                         <button type ="button" id="potonganClearButton">Clear</button>
                     </div>
                 </div>
         </div>

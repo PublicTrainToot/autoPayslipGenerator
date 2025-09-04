@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const potonganInputs = document.querySelectorAll(".currencyPotongan");
 
     const clearButtons = document.querySelectorAll("#clearButton"); // careful, you have 2 clear buttons
+    const potonganClearButtons = document.querySelectorAll("#potonganClearButton"); // careful, you have 2 clear buttons
     const subtotalGajiElement = document.getElementById("subtotalGaji");
     const totalGajiElement = document.getElementById("totalGaji");
 
@@ -69,18 +70,86 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear buttons
     clearButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            [...currencyInputs, ...potonganInputs].forEach(input => input.value = "");
-            subtotalGajiElement.textContent = "Rp 0";
-            totalGajiElement.textContent = "Rp 0";
+            currencyInputs.forEach(input => input.value = ""); // ONLY gaji inputs
+            updateTotals();
         });
     });
+
+    potonganClearButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            potonganInputs.forEach(input => input.value = ""); // ONLY potongan inputs
+            updateTotals();
+        });
+    });
+
+    function shakeInput(inputEl) {
+        inputEl.classList.add("shake");
+        setTimeout(() => inputEl.classList.remove("shake"), 300);
+    }
+
+    function validateFormFields() {
+    let isValid = true;
+    let firstInvalidInput = null;
+
+    const nama = document.getElementById("nama");
+    const bulan = document.getElementById("bulan");
+    const tahun = document.getElementById("periodeGajiTahun");
+
+    const errorNama = document.getElementById("errorNama");
+    const errorBulan = document.getElementById("errorBulan");
+    const errorTahun = document.getElementById("errorTahun");
+
+    function handleInvalid(input, errorBox) {
+        errorBox.textContent = "*Kolom ini harus diisi 🙃";
+        errorBox.style.display = "block";
+        shakeInput(input);
+        if (!firstInvalidInput) {
+            firstInvalidInput = input;
+        }
+        isValid = false;
+    }
+
+    function clearError(errorBox) {
+        errorBox.textContent = "";
+        errorBox.style.display = "none";
+    }
+
+    if (nama.value.trim() === "") {
+        handleInvalid(nama, errorNama);
+    } else {
+        clearError(errorNama);
+    }
+
+    if (bulan.value.trim() === "") {
+        handleInvalid(bulan, errorBulan);
+    } else {
+        clearError(errorBulan);
+    }
+
+    if (tahun.value.trim() === "") {
+        handleInvalid(tahun, errorTahun);
+    } else {
+        clearError(errorTahun);
+    }
+
+    return { isValid, firstInvalidInput };
+}
+
 
     function download_pdf() {
         const pdfElement = document.getElementById("payslipPDF");
 
+        // Get user inputs
+        const name = document.getElementById("nama").value.trim().replace(/\s+/g, '_'); // Replace spaces
+        const month = document.getElementById("bulan").value.trim();
+        const year = document.getElementById("periodeGajiTahun").value.trim();
+
+        // Sanitize and build filename
+        const filename = `${name || 'nama'}-${month || 'bulan'}-${year || 'tahun'}.pdf`;
+
         const opt = {
             margin:       0,
-            filename:     'slip-gaji.pdf',
+            filename:     filename,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  {
                 scale: 1.25,
@@ -135,15 +204,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnDownload = document.getElementById("downloadPayslip");
 
     btnGenerate.addEventListener("click", () => {
-        fillPayslipContent();
-        document.getElementById("payslipPDF").style.display = "block";
-        document.getElementById("pdfWrapper").style.display = "block";
-    });        
+        const validation = validateFormFields();
+
+        if (validation.isValid) {
+            fillPayslipContent();
+            document.getElementById("payslipPDF").style.display = "block";
+            document.getElementById("pdfWrapper").style.display = "block";
+        } else {
+            validation.firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            validation.firstInvalidInput.focus();
+            alert("Kolom diatas tidak boleh kosong 🫠");
+        }   
+    });
 
     btnDownload.addEventListener("click", () => {
-        fillPayslipContent();
-        document.getElementById("payslipPDF").style.display = "block";
-        document.getElementById("pdfWrapper").style.display = "block";
-        download_pdf();
+        const validation = validateFormFields();
+
+        if (validation.isValid) {
+            fillPayslipContent();
+            document.getElementById("payslipPDF").style.display = "block";
+            document.getElementById("pdfWrapper").style.display = "block";
+            download_pdf();
+        } else {
+            validation.firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            validation.firstInvalidInput.focus();
+            alert("Kolom diatas tidak boleh kosong 🫠");
+        }
     });
 });        
