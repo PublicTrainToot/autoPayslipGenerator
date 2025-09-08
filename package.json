@@ -1,0 +1,24 @@
+{
+  "name": "autopayslipgenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PublicTrainToot/autoPayslipGenerator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PublicTrainToot/autoPayslipGenerator/issues"
+  },
+  "homepage": "https://github.com/PublicTrainToot/autoPayslipGenerator#readme",
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
