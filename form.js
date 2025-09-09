@@ -87,26 +87,38 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => inputEl.classList.remove("shake"), 300);
     }
 
+    const yearSelect = document.getElementById("periodeGajiTahun");
+    const currentYear = new Date().getFullYear();
+
+    for (let year = 2000; year <= currentYear + 10; year++) {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+
     function validateFormFields() {
-    let isValid = true;
-    let firstInvalidInput = null;
+        let isValid = true;
+        let firstInvalidInput = null;
 
-    const nama = document.getElementById("nama");
-    const bulan = document.getElementById("bulan");
-    const tahun = document.getElementById("periodeGajiTahun");
+        const nama = document.getElementById("nama");
+        const bulan = document.getElementById("bulan");
+        const tahun = document.getElementById("periodeGajiTahun");
+        const jabatan = document.getElementById("jabatan")
 
-    const errorNama = document.getElementById("errorNama");
-    const errorBulan = document.getElementById("errorBulan");
-    const errorTahun = document.getElementById("errorTahun");
+        const errorNama = document.getElementById("errorNama");
+        const errorBulan = document.getElementById("errorBulan");
+        const errorTahun = document.getElementById("errorTahun");
+        const errorJabatan = document.getElementById("errorJabatan")
 
-    function handleInvalid(input, errorBox) {
-        errorBox.textContent = "*Kolom ini harus diisi 🙃";
-        errorBox.style.display = "block";
-        shakeInput(input);
-        if (!firstInvalidInput) {
-            firstInvalidInput = input;
-        }
-        isValid = false;
+        function handleInvalid(input, errorBox) {
+            errorBox.textContent = "*Kolom ini harus diisi 🙃";
+            errorBox.style.display = "block";
+            shakeInput(input);
+            if (!firstInvalidInput) {
+                firstInvalidInput = input;
+            }
+            isValid = false;
     }
 
     function clearError(errorBox) {
@@ -114,11 +126,34 @@ document.addEventListener("DOMContentLoaded", () => {
         errorBox.style.display = "none";
     }
 
+    // 💡 Define reusable name formatter
+    function formatName(str) {
+        return str
+            .replace(/\s+/g, ' ')         // collapse multiple spaces
+            .trim()                       // remove leading/trailing spaces
+            .toLowerCase()               // lowercase all
+            .replace(/\b\w/g, c => c.toUpperCase());  // capitalize first letter of each word
+    }
+
+    // 💡 Name validation inside your validateFormFields()
+    const namePattern = /^[A-Za-z\s]+$/;
     if (nama.value.trim() === "") {
         handleInvalid(nama, errorNama);
+    } else if (!namePattern.test(nama.value.trim())) {
+        errorNama.textContent = "*Nama hanya boleh huruf dan spasi 😐";
+        errorNama.style.display = "block";
+        shakeInput(nama);
+        if (!firstInvalidInput) firstInvalidInput = nama;
+        isValid = false;
     } else {
+        nama.value = formatName(nama.value);  // ← Auto-format it
         clearError(errorNama);
     }
+    // 💡 Make it auto-correct as user types away and leaves the field
+    nama.addEventListener("blur", () => {
+        nama.value = formatName(nama.value);
+    });
+
 
     if (bulan.value.trim() === "") {
         handleInvalid(bulan, errorBulan);
@@ -132,9 +167,14 @@ document.addEventListener("DOMContentLoaded", () => {
         clearError(errorTahun);
     }
 
-    return { isValid, firstInvalidInput };
-}
+     if (jabatan.value.trim() === "") {
+        handleInvalid(jabatan, errorJabatan);
+    } else {
+        clearError(errorJabatan);
+    }
 
+    return { isValid, firstInvalidInput };
+    }
 
     function download_pdf() {
         const pdfElement = document.getElementById("payslipPDF");
@@ -215,20 +255,5 @@ document.addEventListener("DOMContentLoaded", () => {
             validation.firstInvalidInput.focus();
             alert("Kolom diatas tidak boleh kosong 🫠");
         }   
-    });
-
-    btnDownload.addEventListener("click", () => {
-        const validation = validateFormFields();
-
-        if (validation.isValid) {
-            fillPayslipContent();
-            document.getElementById("payslipPDF").style.display = "block";
-            document.getElementById("pdfWrapper").style.display = "block";
-            download_pdf();
-        } else {
-            validation.firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
-            validation.firstInvalidInput.focus();
-            alert("Kolom diatas tidak boleh kosong 🫠");
-        }
     });
 });        
