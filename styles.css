@@ -1,5 +1,6 @@
 .logo {
-    max-width: 500px;
+    max-width: 350px;
+    padding: -10%;
     height: auto;
     margin-bottom: 10px;
 }
@@ -393,4 +394,28 @@ select {
 .info-table, .data-table { width: 100%; border-collapse: collapse; }
 .info-table tr, .data-table tr { page-break-inside: avoid; }
 .subtotal-row, .signature { page-break-inside: avoid; }
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  z-index: 9999;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  pointer-events: none; /* makes it non-hoverable when hidden */
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
 

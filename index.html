@@ -71,7 +71,9 @@
                      <div class="field">
                         <label>Periode Gaji Tahun:</label>
                         <div class="input-wrapper">
-                            <select id="periodeGajiTahun" required></select>
+                            <select id="periodeGajiTahun" required>
+                                <option value="">-- Pilih Tahun --</option>
+                            </select>
                             <small class="error-message" id="errorTahun"></small>
                         </div>
                     </div>
@@ -202,12 +204,16 @@
                          <button type ="button" id="potonganClearButton">Clear</button>
                     </div>
                 </div>
+
+                <div id="toast" class="toast">🫠 Kolom tidak boleh kosong</div>
         </div>
 
         <div class="form-container-bottom">
             <div class="button-row">
                 <button type="button" id="generatePayslip">Preview</button>
                 <button type="button" id="downloadPayslip">Download</button>
+                <button type="button" id="emailPayslip">Send to Email</button>
+                <button type="button" id="stagingPayslip">Add To Staging</button>
             </div>
         </div>
 
@@ -215,7 +221,7 @@
             <div id="payslipPDF" style="display:none;">
                 <div class="header">
                     <img src="assets/logo-mitra.png" alt="Rumah Sakit Mitra Logo" class="logo">
-                    <h3>SLIP GAJI</h3>
+                    <h1>SLIP GAJI</h1>
                 </div>
 
                 <table class="info-table">

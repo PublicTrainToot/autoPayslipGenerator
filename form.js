@@ -253,7 +253,48 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             validation.firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
             validation.firstInvalidInput.focus();
-            alert("Kolom diatas tidak boleh kosong 🫠");
+            showToast("Kolom diatas tidak boleh kosong 🫠");
         }   
     });
+
+    btnDownload.addEventListener("click", () => {
+        const validation = validateFormFields();
+
+        if (validation.isValid) {
+            fillPayslipContent();
+            document.getElementById("payslipPDF").style.display = "block";
+            download_pdf();
+        } else {
+            validation.firstInvalidInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            validation.firstInvalidInput.focus();
+            showToast("Kolom diatas tidak boleh kosong 🫠");
+        }   
+    });
+
+    const btnEmail = document.getElementById("emailPayslip");
+
+    btnEmail.addEventListener("click", () => {
+        const nama = document.getElementById("nama").value.trim();
+        const bulan = document.getElementById("bulan").value;
+        const tahun = document.getElementById("periodeGajiTahun").value;
+
+        const subject = encodeURIComponent(`Slip Gaji ${nama || "[NAMA]"}`);
+        const body = encodeURIComponent(`Halo,\n\nTerlampir slip gaji untuk bulan ${bulan || "[BULAN]"} ${tahun || "[TAHUN]"}.\n\nSilakan lampirkan file PDF secara manual karena browser bukan penyihir. 🙃\n\nTerima kasih!`);
+
+        // Open Gmail compose
+        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=&su=${subject}&body=${body}`);
+    });
+
+    function showToast(message, duration = 3000) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+    // Reset timer if spammed
+    if (toast.toastTimer) clearTimeout(toast.toastTimer);
+
+    toast.toastTimer = setTimeout(() => {
+            toast.classList.remove("show");
+        }, duration);
+    }
 });        
