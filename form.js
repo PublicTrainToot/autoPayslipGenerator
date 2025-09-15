@@ -6,46 +6,69 @@ document.addEventListener("DOMContentLoaded", () => {
     const potonganClearButtons = document.querySelectorAll("#potonganClearButton"); // careful, you have 2 clear buttons
     const subtotalGajiElement = document.getElementById("subtotalGaji");
     const totalGajiElement = document.getElementById("totalGaji");
-    // At top of form.js
-let archive = {
-  folders: []
-};
 
-// Add staging logic
-const btnStaging = document.getElementById("stagingPayslip");
+    let archive = {
+    folders: []
+    };
 
-btnStaging.addEventListener("click", () => {
-  const validation = validateFormFields();
-  if (!validation.isValid) {
-    showToast("Form not valid, can't stage yet 😅");
-    return;
-  }
+    let currentFolder = "Default"; // start with Default
 
-  const formData = {
+    // Add staging logic
+    const btnStaging = document.getElementById("stagingPayslip");
+
+    btnStaging.addEventListener("click", () => {
+    const validation = validateFormFields();
+    if (!validation.isValid) {
+        showToast("Form not valid, can't stage yet 😅");
+        return;
+    }
+
+    const formData = {
     id: `${document.getElementById("nama").value}_${document.getElementById("jabatan").value}_${document.getElementById("bulan").value}_${document.getElementById("periodeGajiTahun").value}`,
     data: {
-      nama: document.getElementById("nama").value,
-      jabatan: document.getElementById("jabatan").value,
-      bulan: document.getElementById("bulan").value,
-      tahun: document.getElementById("periodeGajiTahun").value,
-      gajiPokok: document.getElementById("gajiPokok").value,
-      // ... other fields
+        // Identitas
+        nama: document.getElementById("nama").value,
+        jabatan: document.getElementById("jabatan").value,
+        bulan: document.getElementById("bulan").value,
+        tahun: document.getElementById("periodeGajiTahun").value,
+
+        // Gaji components
+        gajiPokok: document.getElementById("gajiPokok").value,
+        tunjanganStruktural: document.getElementById("tunjanganStruktural").value,
+        tunjanganFungsional: document.getElementById("tunjanganFungsional").value,
+        tunjanganKehadiran: document.getElementById("tunjanganKehadiran").value,
+        insentif: document.getElementById("Insentif").value,
+        onCall: document.getElementById("onCall").value,
+        lembur: document.getElementById("lembur").value,
+        lainLain: document.getElementById("lainLain").value,
+
+        // Potongan
+        bpjsKetenagakerjaan: document.getElementById("bpjsKetenagakerjaan").value,
+        bpjsKesehatan: document.getElementById("bpjsKesehatan").value,
+        bpjsKesehatanKeluargaTambahan: document.getElementById("bpjsKesehatanKeluargaTambahan").value,
+        absensiKeterlambatan: document.getElementById("absensiKeterlambatan").value,
+        absensiKetidakhadiranSakit: document.getElementById("absensiKetidakhadiranSakit").value,
+        dendaKetidakhadiran: document.getElementById("dendaKetidakhadiran").value,
+        tagihan: document.getElementById("tagihan").value,
+        koperasi: document.getElementById("koperasi").value,
+        pph21: document.getElementById("pph21").value
     }
-  };
+    };
 
-  // For now, dump into a "Default" folder
-  let folder = archive.folders.find(f => f.name === "Default");
-  if (!folder) {
-    folder = { name: "Default", forms: [] };
-    archive.folders.push(folder);
-  }
+    // Use the currently selected folder (default = "Default")
+    let folder = archive.folders.find(f => f.name === currentFolder);
+    if (!folder) {
+        folder = { name: currentFolder, forms: [] };
+        archive.folders.push(folder);
+    }
 
-  folder.forms.push(formData);
-  saveArchive();              // 💾 persist it
-  renderSidebar();            // redraw sidebar with new entry
-  console.log("Archive now:", archive);
-  alert(`🗄 Form "${formData.id}" staged in Default folder!`);
-});
+    folder.forms.push(formData);
+    saveArchive();   // 💾 persist immediately
+    renderSidebar(); // 🔄 update sidebar if needed
+
+    console.log("Archive now:", archive);
+    alert(`🗄 Form "${formData.id}" staged in Default folder!`);
+    });
 
     // Format number into Rupiah
     function formatRupiah(value) {
@@ -91,28 +114,44 @@ btnStaging.addEventListener("click", () => {
 
     function loadArchive() {
         const data = localStorage.getItem("payslipArchive");
-        if (data) archive = JSON.parse(data);
+        if (data) {
+            archive = JSON.parse(data);
+        }
+        // Always guarantee a Default folder exists
+        if (!archive.folders.find(f => f.name === "Default")) {
+        archive.folders.push({ name: "Default", forms: [] });
+        }
     }
-
-    loadArchive();
 
     function renderSidebar() {
         const sidebar = document.querySelector(".sidebar-content");
-        archive.folders.forEach(folder => {
-        const folderDiv = document.createElement("div");
-        folderDiv.innerHTML = `<h3>${folder.name}</h3>`;
-        
-        folder.forms.forEach(form => {
-        const btn = document.createElement("button");
-        btn.textContent = form.id;
-        btn.addEventListener("click", () => loadFormData(form.data));
-        folderDiv.appendChild(btn);
-    });
+        sidebar.innerHTML = ""; // clear first
 
-        sidebar.appendChild(folderDiv);
-    });
+        archive.folders.forEach(folder => {
+            const folderDiv = document.createElement("div");
+
+            // Folder name as clickable
+            const folderHeader = document.createElement("h3");
+            folderHeader.textContent = folder.name;
+            folderHeader.style.cursor = "pointer";
+            folderHeader.addEventListener("click", () => {
+            currentFolder = folder.name;
+            alert(`📂 Now adding forms into folder: ${folder.name}`);
+            });
+
+            folderDiv.appendChild(folderHeader);
+
+            // Forms inside folder
+            folder.forms.forEach(form => {
+            const btn = document.createElement("button");
+            btn.textContent = form.id;
+            btn.addEventListener("click", () => loadFormData(form.data));
+            folderDiv.appendChild(btn);
+            });
+
+            sidebar.appendChild(folderDiv);
+        });
     }
-    renderSidebar()
 
     function loadFormData(data) {
     document.getElementById("nama").value = data.nama;
@@ -123,10 +162,8 @@ btnStaging.addEventListener("click", () => {
     updateTotals(); // recalc totals
     }
 
-
-    // Call loadArchive() on page load
-    document.addEventListener("DOMContentLoaded", loadArchive);
-
+    loadArchive();
+    renderSidebar();
 
     // Attach input listeners for gaji
     currencyInputs.forEach(input => {
@@ -400,15 +437,26 @@ btnStaging.addEventListener("click", () => {
 
     // "Enter" key to "create folder"
     folderInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const folderName = folderInput.value.trim();
-            if (folderName) {
-                alert(`📁 Folder "${folderName}" created!`);
-                folderInput.value = "";
-                inputContainer.classList.add("hidden");
-            } else {
-                alert("Folder name can't be empty 🙃");
-            }
+    if (e.key === "Enter") {
+        const folderName = folderInput.value.trim();
+        if (folderName) {
+        // 1. Check if folder already exists
+        let existing = archive.folders.find(f => f.name === folderName);
+        if (!existing) {
+            archive.folders.push({ name: folderName, forms: [] });
+            currentFolder = folderName;   // 🔥 FIX: switch to new folder immediately
+            saveArchive();
+            renderSidebar();
+            alert(`📁 Folder "${folderName}" created and selected!`);
+        } else {
+            alert(`⚠️ Folder "${folderName}" already exists!`);
         }
+
+        folderInput.value = "";
+        inputContainer.classList.add("hidden");
+        } else {
+        alert("Folder name can't be empty 🙃");
+        }
+    }
     });
 });        
