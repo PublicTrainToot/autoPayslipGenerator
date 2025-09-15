@@ -6,6 +6,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const potonganClearButtons = document.querySelectorAll("#potonganClearButton"); // careful, you have 2 clear buttons
     const subtotalGajiElement = document.getElementById("subtotalGaji");
     const totalGajiElement = document.getElementById("totalGaji");
+    // At top of form.js
+let archive = {
+  folders: []
+};
+
+// Add staging logic
+const btnStaging = document.getElementById("stagingPayslip");
+
+btnStaging.addEventListener("click", () => {
+  const validation = validateFormFields();
+  if (!validation.isValid) {
+    showToast("Form not valid, can't stage yet 😅");
+    return;
+  }
+
+  const formData = {
+    id: `${document.getElementById("nama").value}_${document.getElementById("jabatan").value}_${document.getElementById("bulan").value}_${document.getElementById("periodeGajiTahun").value}`,
+    data: {
+      nama: document.getElementById("nama").value,
+      jabatan: document.getElementById("jabatan").value,
+      bulan: document.getElementById("bulan").value,
+      tahun: document.getElementById("periodeGajiTahun").value,
+      gajiPokok: document.getElementById("gajiPokok").value,
+      // ... other fields
+    }
+  };
+
+  // For now, dump into a "Default" folder
+  let folder = archive.folders.find(f => f.name === "Default");
+  if (!folder) {
+    folder = { name: "Default", forms: [] };
+    archive.folders.push(folder);
+  }
+
+  folder.forms.push(formData);
+  saveArchive();              // 💾 persist it
+  renderSidebar();            // redraw sidebar with new entry
+  console.log("Archive now:", archive);
+  alert(`🗄 Form "${formData.id}" staged in Default folder!`);
+});
 
     // Format number into Rupiah
     function formatRupiah(value) {
@@ -44,6 +84,49 @@ document.addEventListener("DOMContentLoaded", () => {
         subtotalGajiElement.textContent = "Rp " + subtotal.toLocaleString("id-ID");
         totalGajiElement.textContent = "Rp " + total.toLocaleString("id-ID");
     }
+
+    function saveArchive() {
+        localStorage.setItem("payslipArchive", JSON.stringify(archive));
+    }
+
+    function loadArchive() {
+        const data = localStorage.getItem("payslipArchive");
+        if (data) archive = JSON.parse(data);
+    }
+
+    loadArchive();
+
+    function renderSidebar() {
+        const sidebar = document.querySelector(".sidebar-content");
+        archive.folders.forEach(folder => {
+        const folderDiv = document.createElement("div");
+        folderDiv.innerHTML = `<h3>${folder.name}</h3>`;
+        
+        folder.forms.forEach(form => {
+        const btn = document.createElement("button");
+        btn.textContent = form.id;
+        btn.addEventListener("click", () => loadFormData(form.data));
+        folderDiv.appendChild(btn);
+    });
+
+        sidebar.appendChild(folderDiv);
+    });
+    }
+    renderSidebar()
+
+    function loadFormData(data) {
+    document.getElementById("nama").value = data.nama;
+    document.getElementById("jabatan").value = data.jabatan;
+    document.getElementById("bulan").value = data.bulan;
+    document.getElementById("periodeGajiTahun").value = data.tahun;
+    // ... load the rest
+    updateTotals(); // recalc totals
+    }
+
+
+    // Call loadArchive() on page load
+    document.addEventListener("DOMContentLoaded", loadArchive);
+
 
     // Attach input listeners for gaji
     currencyInputs.forEach(input => {
@@ -297,4 +380,35 @@ document.addEventListener("DOMContentLoaded", () => {
             toast.classList.remove("show");
         }, duration);
     }
+
+    // Sidebar toggle
+    const hamburger = document.getElementById("hamburgerMenu");
+    const sidebar = document.getElementById("sidebar");
+    hamburger.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+    });
+
+    // Folder input logic
+    const createBtn = document.getElementById("createFolderBtn");
+    const inputContainer = document.getElementById("folderInputContainer");
+    const folderInput = document.getElementById("folderNameInput");
+
+    createBtn.addEventListener("click", () => {
+        inputContainer.classList.toggle("hidden");
+        folderInput.focus();
+    });
+
+    // "Enter" key to "create folder"
+    folderInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const folderName = folderInput.value.trim();
+            if (folderName) {
+                alert(`📁 Folder "${folderName}" created!`);
+                folderInput.value = "";
+                inputContainer.classList.add("hidden");
+            } else {
+                alert("Folder name can't be empty 🙃");
+            }
+        }
+    });
 });        
